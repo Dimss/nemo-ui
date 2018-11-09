@@ -12,6 +12,10 @@ export default class ApiClient {
     return this.execRequest("get", this.feed + "/feed");
   }
 
+  deleteLink(imageId) {
+    return this.execRequest("delete", this.feed + "/links/" + imageId);
+  }
+
   addComment(comment, imageId) {
     let payload = { imageId: imageId, comment: comment };
     return this.execRequest("post", this.feed + "/comments", payload);

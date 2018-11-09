@@ -74,3 +74,16 @@ export function addComment(imageId) {
     }
   };
 }
+
+export function deleteImage() {
+  return async (dispatch, getState) => {
+    let { currentImageId } = getState().feedReducer;
+    let err, resData;
+    [err, resData] = await new ApiClient().deleteLink(currentImageId);
+    if (err) {
+      notification.error({ message: "Error", description: err.message });
+    } else {
+      dispatch(loadFeed());
+    }
+  };
+}

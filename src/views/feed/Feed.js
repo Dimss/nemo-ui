@@ -7,7 +7,8 @@ import {
   setCurrentImageId,
   setCommentModalVisible,
   setComment,
-  addComment
+  addComment,
+  deleteImage
 } from "../../actions/feedActions";
 const { TextArea } = Input;
 const { Meta } = Card;
@@ -52,12 +53,21 @@ export default class Feed extends React.Component {
                           this.context.store.dispatch(
                             setCurrentImageId(el._id)
                           );
+                          this.context.store.dispatch(setComment(""));
                           this.context.store.dispatch(
                             setCommentModalVisible(true)
                           );
                         }}
                       />,
-                      <Icon type="delete" />
+                      <Icon
+                        type="delete"
+                        onClick={() => {
+                          this.context.store.dispatch(
+                            setCurrentImageId(el._id)
+                          );
+                          this.context.store.dispatch(deleteImage());
+                        }}
+                      />
                     ]}
                   >
                     <Meta title={el.title} description="" />
@@ -84,7 +94,9 @@ export default class Feed extends React.Component {
                       type="primary"
                       onClick={() => {
                         this.context.store.dispatch(addComment());
-                        this.context.store.dispatch(setCommentModalVisible(false));
+                        this.context.store.dispatch(
+                          setCommentModalVisible(false)
+                        );
                       }}
                     >
                       Add comment
