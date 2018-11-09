@@ -9,7 +9,12 @@ export default class ApiClient {
   }
 
   fetchUserFeed() {
-    return this.execRequest("get", this.feed + "/links");
+    return this.execRequest("get", this.feed + "/feed");
+  }
+
+  addComment(comment, imageId) {
+    let payload = { imageId: imageId, comment: comment };
+    return this.execRequest("post", this.feed + "/comments", payload);
   }
 
   userLogin(email, password) {
@@ -28,6 +33,10 @@ export default class ApiClient {
 
   uploadImage(data) {
     return this.execRequest("post", this.receiver + "/upload", data, true);
+  }
+
+  addLike(imageId) {
+    return this.execRequest("post", this.feed + "/likes/" + imageId);
   }
 
   execRequest(method, url, data = null, isFromData = false) {

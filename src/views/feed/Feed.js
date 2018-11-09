@@ -1,12 +1,24 @@
 import React from "react";
-import { Icon, Card, Divider } from "antd";
+import { Icon, Card, Divider, Modal, Button, Input } from "antd";
 import { Grid, Row, Col } from "react-flexbox-grid";
-import { loadFeed } from "../../actions/feedActions";
+import {
+  loadFeed,
+  addLike,
+  setCurrentImageId,
+  setCommentModalVisible,
+  setComment,
+  addComment
+} from "../../actions/feedActions";
+const { TextArea } = Input;
 const { Meta } = Card;
 export default class Feed extends React.Component {
   componentWillMount() {
     this.context.store.dispatch(loadFeed());
   }
+
+  onLikeClick = el => {
+    console.log(el);
+  };
   render() {
     return (
       <Grid fluid>
@@ -22,12 +34,29 @@ export default class Feed extends React.Component {
                       <img alt={el.title} src={"http://receiver/" + el.link} />
                     }
                     actions={[
+                      <div>
+                        <Icon
+                          key={el._id}
+                          type="like"
+                          theme="twoTone"
+                          twoToneColor="#eb2f96"
+                          onClick={() => {
+                            this.context.store.dispatch(addLike(el._id));
+                          }}
+                        />
+                        <span> {el.likes}</span>
+                      </div>,
                       <Icon
-                        type="like"
-                        theme="twoTone"
-                        twoToneColor="#eb2f96"
+                        type="form"
+                        onClick={() => {
+                          this.context.store.dispatch(
+                            setCurrentImageId(el._id)
+                          );
+                          this.context.store.dispatch(
+                            setCommentModalVisible(true)
+                          );
+                        }}
                       />,
-                      <Icon type="form" />,
                       <Icon type="delete" />
                     ]}
                   >
@@ -35,19 +64,58 @@ export default class Feed extends React.Component {
                     <Divider orientation="left">
                       Comments <Icon type="team" theme="outlined" />
                     </Divider>
-                    <div>
-                      <p style={{ textAlign: "left" }}>Awesome!</p>
-                      ...
-                    </div>
-                    <div>
-                      <p style={{ textAlign: "left" }}>Good one</p>
-                    </div>
-                    ...
-                    <div>
-                      <p style={{ textAlign: "left" }}>Good one</p>
-                    </div>
+                    {el.comments.map((comment, index) => (
+                      <div key={index}>
+                        <p style={{ textAlign: "left" }}>{comment.comment}</p>
+                        ...
+                      </div>
+                    ))}
                   </Card>
                 ))}
+                <Modal
+                  title={"Add comment"}
+                  visible={this.props.commentModalVisible}
+                  onCancel={() => {
+                    this.context.store.dispatch(setCommentModalVisible(false));
+                  }}
+                  footer={[
+                    <Button
+                      key="upload"
+                      type="primary"
+                      onClick={() => {
+                        this.context.store.dispatch(addComment());
+                        this.context.store.dispatch(setCommentModalVisible(false));
+                      }}
+                    >
+                      Add comment
+                    </Button>,
+                    <Button
+                      key="cancel"
+                      onClick={() => {
+                        this.context.store.dispatch(
+                          setCommentModalVisible(false)
+                        );
+                      }}
+                    >
+                      Cancel
+                    </Button>
+                  ]}
+                >
+                  <div>
+                    <Row>
+                      <Col md={2}>
+                        <p>Comment </p>
+                      </Col>
+                      <Col md={10}>
+                        <TextArea
+                          onChange={this.props.onCommentInputChange}
+                          value={this.props.comment}
+                          rows={4}
+                        />
+                      </Col>
+                    </Row>
+                  </div>
+                </Modal>
               </div>
             </Row>
           </Col>
