@@ -1,2 +1,3 @@
+cd /opt/app-root/src/src
 npm i
 npm start
