@@ -1,1 +1,3 @@
-echo "gonna build and run on start"
+ls -all
+mv /tmp/src/ /opt/app-root/src
+ls -all /opt/app-root/src
