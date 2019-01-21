@@ -1,2 +1,6 @@
 ls -all /tmp/src/
-cp -r  /tmp/src/ /opt/app-root/src/
+cd  /tmp/src/ 
+npm i
+npm install -g serve
+mv /tmp/src/build /opt/app-root/src/
+ls /opt/app-root/src/build
