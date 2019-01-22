@@ -3,9 +3,9 @@ import { store } from "../store";
 
 export default class ApiClient {
   constructor() {
-    this.identity = "http://identity";
-    this.receiver = "http://receiver";
-    this.feed = "http://feed";
+    this.identity = "http://identity.nemo";
+    this.receiver = "http://receiver.nemo";
+    this.feed = "http://feed.nemo";
   }
 
   fetchUserFeed() {
