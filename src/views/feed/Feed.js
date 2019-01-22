@@ -32,7 +32,7 @@ export default class Feed extends React.Component {
                     key={idx}
                     style={{ width: 500, marginTop: "10px" }}
                     cover={
-                      <img alt={el.title} src={"http://receiver/" + el.link} />
+                      <img alt={el.title} src={"http://receiver.nemo/" + el.link} />
                     }
                     actions={[
                       <div>
