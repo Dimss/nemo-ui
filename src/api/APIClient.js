@@ -3,9 +3,9 @@ import { store } from "../store";
 
 export default class ApiClient {
   constructor() {
-    this.identity = "http://identity.nemo";
-    this.receiver = "http://receiver.nemo";
-    this.feed = "http://feed.nemo";
+    this.identity = "http://identity.apps.a.okto.ocplab.io";
+    this.receiver = "http://receiver.apps.a.okto.ocplab.io";
+    this.feed = "http://feed.apps.a.okto.ocplab.io";
   }
 
   fetchUserFeed() {
